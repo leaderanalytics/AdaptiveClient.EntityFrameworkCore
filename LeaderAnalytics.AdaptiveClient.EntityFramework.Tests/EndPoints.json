@@ -1,0 +1,43 @@
+﻿{
+  "EndPointConfigurations": [
+    {
+      "Name": "StoreFront_SQLServer",
+      "IsActive": "false",
+      "API_Name": "StoreFront",
+      "Preference": "10",
+      "EndPointType": "InProcess",
+      "ProviderName": "MSSQL",
+      "ConnectionString": "Data Source=.\\SQLSERVER;Initial Catalog=AdaptiveClient_StoreFront;Integrated Security=True;MultipleActiveResultSets=True;"
+    },
+
+    {
+      "Name": "BackOffice_SQLServer",
+      "IsActive": "false",
+      "API_Name": "BackOffice",
+      "Preference": "10",
+      "EndPointType": "InProcess",
+      "ProviderName": "MSSQL",
+      "ConnectionString": "Data Source=.\\SQLSERVER;Initial Catalog=AdaptiveClient_BackOffice;Integrated Security=True;MultipleActiveResultSets=True;"
+    },
+
+    {
+      "Name": "StoreFront_MySQL",
+      "IsActive": "true",
+      "API_Name": "StoreFront",
+      "Preference": "10",
+      "EndPointType": "InProcess",
+      "ProviderName": "MySQL",
+      "ConnectionString": "Server=localhost;Database=AdaptiveClient_StoreFront;Uid={MySQL_UserName};Pwd={MySQL_Password};"
+    },
+
+    {
+      "Name": "BackOffice_MySQL",
+      "IsActive": "true",
+      "API_Name": "BackOffice",
+      "Preference": "10",
+      "EndPointType": "InProcess",
+      "ProviderName": "MySQL",
+      "ConnectionString": "Server=localhost;Database=AdaptiveClient_BackOffice;Uid={MySQL_UserName};Pwd={MySQL_Password};"
+    }
+  ]
+}
