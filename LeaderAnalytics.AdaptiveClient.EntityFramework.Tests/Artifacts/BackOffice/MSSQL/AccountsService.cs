@@ -25,6 +25,11 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOff
             return await db.Accounts.ToListAsync();
         }
 
+        public async Task<DateTime?> GetLastPaymentDate(int accountID)
+        {
+            return (await ServiceManifest.PaymentsService.GetPaymentsForAccount(accountID))?.Max(x => x.PaymentDate);
+        }
+
         public virtual async Task<int> SaveAccount(Account account)
         {
             db.Entry(account).State = account.ID == 0 ? EntityState.Added : EntityState.Modified;
