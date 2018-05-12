@@ -9,29 +9,55 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
 {
     public static class ResolutionHelperExtensions
     {
-        public static IDbContextOptions<TContext> ResolveDbContextOptions<TContext>(this ResolutionHelper helper) where TContext : DbContext
+        public static DbContext ResolveDbContext(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
-            Func<IEndPointConfiguration> epFactory = helper.cxt.Resolve<Func<IEndPointConfiguration>>();  // Registered by AdaptiveClient
-            IEndPointConfiguration ep = epFactory();
-            IDbContextOptions<TContext> options = helper.cxt.ResolveKeyed<IDbContextOptions<TContext>>(ep.ProviderName, new TypedParameter(typeof(string), ep.ConnectionString));
-            return options;
+            if (ep == null)
+                throw new ArgumentNullException("ep");
+
+            IDbContextOptions options = null;
+
+            try
+            {
+                options = ResolveDbContextOptions(helper, ep);
+            }
+            catch (ComponentNotRegisteredException ex)
+            {
+                throw new ComponentNotRegisteredException($"DbContext could not be resolved. See InnerException for additional detail.", ex);
+            }
+
+            DbContext context = helper.cxt.ResolveOptionalKeyed<DbContext>(ep.API_Name, new TypedParameter(typeof(DbContextOptions), options.Options));
+
+            if (context == null)
+                throw new ComponentNotRegisteredException($"DbContext could not be resolved for API_Name {ep.API_Name}. Call RegisterDbContext with an API_Name of {ep.API_Name} to register the required component.");
+
+            return context;
         }
 
+        /// <summary>
+        /// This overload is primarily for internal use by AdaptiveClient.
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <returns></returns>
         public static IDbContextOptions ResolveDbContextOptions(this ResolutionHelper helper) 
         {
-            Func<IEndPointConfiguration> epFactory = helper.cxt.Resolve<Func<IEndPointConfiguration>>();  // Registered by AdaptiveClient
+            Func<IEndPointConfiguration> epFactory = helper.cxt.Resolve<Func<IEndPointConfiguration>>();  // Registered by AdaptiveClient.  Returns EndPointContext.CurrentEndPoint 
             IEndPointConfiguration ep = epFactory();
-            IDbContextOptions options = helper.cxt.ResolveKeyed<IDbContextOptions>(ep.ProviderName, new TypedParameter(typeof(string), ep.ConnectionString));
-            return options;
+
+            if (ep == null)
+                throw new Exception("EndPointContext.CurrentEndPoint is null.");
+
+
+            return ResolveDbContextOptions(helper, ep);
         }
 
-        public static DbContext ResolveContext(this ResolutionHelper helper, IEndPointConfiguration ep) 
+        public static IDbContextOptions ResolveDbContextOptions(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
-            IDbContextOptions options = helper.cxt.ResolveKeyed<IDbContextOptions>(ep.ProviderName, new TypedParameter(typeof(string), ep.ConnectionString));
-            //DbContext context = cxt.ResolveKeyed<DbContext>(ep.API_Name + ep.ProviderName, new TypedParameter(typeof(DbContextOptions), options.Options));
-            Func<IDbContextOptions, DbContext> contextFunc = helper.cxt.ResolveKeyed<Func<IDbContextOptions, DbContext>>(ep.API_Name + ep.ProviderName, new TypedParameter(typeof(IDbContextOptions), options.Options));
-            DbContext context = contextFunc(options);
-            return context;
+            IDbContextOptions options = helper.cxt.ResolveOptionalKeyed<IDbContextOptions>(ep.ProviderName, new TypedParameter(typeof(string), ep.ConnectionString));
+
+            if (options == null)
+                throw new ComponentNotRegisteredException($"IDbContextOptions have not been registered for ProviderName {ep.ProviderName}. Call RegisterDbContextOptions with a ProviderName of {ep.ProviderName} to register the required component.");
+
+            return options;
         }
 
         /// <summary>
@@ -41,34 +67,38 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
         /// migration context is also used by EF itself for creating migrations and updating the 
         /// database (--context command line option).
         /// </summary>
-        /// <typeparam name="TContext"></typeparam>
         /// <param name="ep"></param>
         /// <returns></returns>
         public static DbContext ResolveMigrationContext(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
-            IDbContextOptions options = helper.cxt.ResolveKeyed<IDbContextOptions>(ep.ProviderName, new TypedParameter(typeof(string), ep.ConnectionString));
-            DbContext context = helper.cxt.ResolveKeyed<IMigrationContext>(ep.API_Name + ep.ProviderName, new TypedParameter(typeof(DbContextOptions), options.Options)) as DbContext;
-            return context;
-        }
-
-        public static IDataInitializer ResolveDataInitializer(this ResolutionHelper helper, IEndPointConfiguration ep)
-        {
-            object migrator = null;
-            DbContext context = ResolveContext(helper, ep);
+            IDbContextOptions options = null;
 
             try
             {
-                migrator = helper.cxt.ResolveKeyed(ep.API_Name + ep.ProviderName, typeof(IDataInitializer), new TypedParameter(context.GetType(), context));
+                options = ResolveDbContextOptions(helper, ep);
             }
-            catch (Exception)
+            catch (ComponentNotRegisteredException)
             {
-                // swallow it
+                return null;
             }
 
-            if (migrator != null)
-                return migrator as IDataInitializer;
+            return helper.cxt.ResolveOptionalKeyed<IMigrationContext>(ep.API_Name + ep.ProviderName, new TypedParameter(typeof(DbContextOptions), options.Options)) as DbContext;
+        }
 
-            return null;
+        public static IDatabaseInitializer ResolveDatabaseInitializer(this ResolutionHelper helper, IEndPointConfiguration ep)
+        {
+            DbContext context = null;
+
+            try
+            {
+                context = ResolveDbContext(helper, ep);
+            }
+            catch (ComponentNotRegisteredException)
+            {
+                return null;
+            }
+
+            return helper.cxt.ResolveOptionalKeyed<IDatabaseInitializer>(ep.API_Name + ep.ProviderName, new TypedParameter(context.GetType(), context));
         }
     }
 }

@@ -10,6 +10,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOff
     {
         public Db_MSSQL(DbContextOptions options) : base(options)
         {
+            // Nothing to see here.  This is just a stub so EntityFramework reflection finds the right DbContext to use to create a migration.
         }
     }
 }

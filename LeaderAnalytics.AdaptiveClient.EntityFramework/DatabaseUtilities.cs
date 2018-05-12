@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Migrations;
-
 using LeaderAnalytics.AdaptiveClient;
 
 namespace LeaderAnalytics.AdaptiveClient.EntityFramework
@@ -51,7 +50,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
         public virtual async Task<List<string>> ApplyMigrations(IEndPointConfiguration endPoint) 
         {
             DbContext context = resolver.ResolveMigrationContext(endPoint);
-            IDataInitializer dataInitializer = resolver.ResolveDataInitializer(endPoint);
+            IDatabaseInitializer dataInitializer = resolver.ResolveDatabaseInitializer(endPoint);
             
             List<string> migrations = (await context.Database.GetPendingMigrationsAsync()).ToList();
             IMigrator migrator = context.Database.GetService<IMigrator>();
@@ -68,7 +67,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
 
         public virtual async Task DropDatabase(IEndPointConfiguration endPoint) 
         {
-            DbContext context = resolver.ResolveMigrationContext(endPoint);
+            DbContext context = resolver.ResolveDbContext(endPoint);
             await context.Database.EnsureDeletedAsync();
         }
     }

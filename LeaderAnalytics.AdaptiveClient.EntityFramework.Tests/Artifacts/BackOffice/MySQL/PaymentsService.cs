@@ -8,7 +8,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOff
 {
     public class PaymentsService : LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice.MSSQL.PaymentsService
     {
-        public PaymentsService(Db db, IBackOficeServiceManifest serviceManifest) : base(db, serviceManifest)
+        public PaymentsService(Db db, IBOServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
         

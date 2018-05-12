@@ -12,8 +12,6 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            builder.RegisterType<Artifacts.BackOffice.Db>();
-            builder.RegisterType<Artifacts.StoreFront.Db>();
         }
     }
 }

@@ -22,7 +22,7 @@
 
 	MSSQL:
 		dotnet ef migrations add CreateDatabase --context LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront.Db_MSSQL  --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories --output-dir Artifacts/StoreFront/Migrations/MSSQL
-		dotnet ef database update --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories --context LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice.Db_MSSQL
+		dotnet ef database update --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories --context LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront.Db_MSSQL
 
 	MySQL:
 		dotnet ef migrations add CreateDatabase --context LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront.Db_MySQL  --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories --output-dir Artifacts/StoreFront/Migrations/MySQL

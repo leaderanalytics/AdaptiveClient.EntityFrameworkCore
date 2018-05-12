@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LeaderAnalytics.AdaptiveClient.EntityFramework
 {
-    public interface IDataInitializer
+    public interface IDatabaseInitializer
     {
         Task Seed(string migrationName);
     }

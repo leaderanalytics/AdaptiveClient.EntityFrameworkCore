@@ -11,6 +11,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
         {
             base.Load(builder);
             builder.RegisterType<DatabaseUtilities>().As<IDatabaseUtilities>();
+            builder.RegisterType<ServiceManifestFactory>().InstancePerLifetimeScope().PropertiesAutowired();
         }
     }
 }

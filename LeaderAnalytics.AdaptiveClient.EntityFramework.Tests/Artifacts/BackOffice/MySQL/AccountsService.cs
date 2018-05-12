@@ -11,7 +11,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOff
 {
     public class AccountsService : LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice.MSSQL.AccountsService
     {
-        public AccountsService(Db db, IBackOficeServiceManifest serviceManifest) : base(db, serviceManifest)
+        public AccountsService(Db db, IBOServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
 

@@ -20,8 +20,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaptiveClient" Version="0.20.11" />
-    <PackageReference Include="Autofac" Version="4.8.0" />
+    <PackageReference Include="AdaptiveClient" Version="0.20.14" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />

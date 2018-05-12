@@ -9,21 +9,27 @@ using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice;
 
 namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice.MSSQL
 {
-    public class AccountsService : BaseService, IAccountssService
+    public class AccountsService : BaseService, IAccountsService
     {
-        public AccountsService(Db db, IBackOficeServiceManifest serviceManifest) : base(db, serviceManifest)
+        public AccountsService(Db db, IBOServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
 
-        public virtual async Task<Account> GetClientByID(int id)
+        public virtual async Task<Account> GetAccountByID(int id)
         {
             return await db.Accounts.FirstOrDefaultAsync(x => x.ID == id);
         }
 
-        public virtual async Task SaveClient(Account client)
+        public virtual async Task<List<Account>> GetAccounts()
         {
-            db.Entry(client).State = client.ID == 0 ? EntityState.Added : EntityState.Modified;
+            return await db.Accounts.ToListAsync();
+        }
+
+        public virtual async Task<int> SaveAccount(Account account)
+        {
+            db.Entry(account).State = account.ID == 0 ? EntityState.Added : EntityState.Modified;
             await db.SaveChangesAsync();
+            return account.ID;
         }
     }
 }

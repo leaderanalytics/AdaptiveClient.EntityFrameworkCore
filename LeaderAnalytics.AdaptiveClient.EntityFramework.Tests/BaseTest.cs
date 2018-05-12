@@ -1,36 +1,51 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text;
 using LeaderAnalytics.AdaptiveClient;
 using LeaderAnalytics.AdaptiveClient.EntityFramework;
 using Autofac;
+using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts;
+using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice;
+using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront;
 
 namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
 {
 
     public abstract class BaseTest
     {
-        private IContainer Container { get; set; }
-        
+        protected ContainerBuilder Builder { get; set; }
+        protected IContainer Container { get; set; }
+        protected IEnumerable<IEndPointConfiguration> EndPoints { get; set; }
+        protected IAdaptiveClient<IBOServiceManifest> BOServiceClient;
+        protected IDatabaseUtilities DatabaseUtilities;
+        protected readonly string CurrentDatabaseProviderName;
 
-        public BaseTest()
+        public BaseTest(string databaseProviderName)
         {
-            ContainerBuilder builder = new ContainerBuilder();
-            builder.RegisterModule(new AutofacModule());
-            RegistrationHelper registrationHelper = new RegistrationHelper(builder);
+            CurrentDatabaseProviderName = databaseProviderName;  // passed in by NUnit based on TestFixture attribute
+        }
+
+        protected async Task DropAndRecreate(IEndPointConfiguration ep)
+        {
+            await DatabaseUtilities.DropDatabase(ep);
+            await DatabaseUtilities.ApplyMigrations(ep);
+        }
+
+        protected async Task CreateTestArtifacts()
+        {
+            EndPoints = EndPointUtilities.LoadEndPoints("EndPoints.json");
+            EndPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(EndPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            EndPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(EndPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            Builder = new ContainerBuilder();
+            Builder.RegisterModule(new AutofacModule());
+            Builder.RegisterModule(new LeaderAnalytics.AdaptiveClient.EntityFramework.AutofacModule());
+            RegistrationHelper registrationHelper = new RegistrationHelper(Builder);
             registrationHelper.RegisterModule(new AdaptiveClientModule());
-            Container = builder.Build();
-        }
-
-        public async Task DropAndRecreate(IEndPointConfiguration ep)
-        {
-
-        }
-
-        public async Task CreateTestArtifacts()
-        {
-
+            Container = Builder.Build();
+            BOServiceClient = Container.Resolve<IAdaptiveClient<IBOServiceManifest>>();
+            DatabaseUtilities = Container.Resolve<IDatabaseUtilities>();
         }
     }
 }

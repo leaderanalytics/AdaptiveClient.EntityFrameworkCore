@@ -6,10 +6,10 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOff
 {
     public class BaseService : IDisposable
     {
-        protected IBackOficeServiceManifest ServiceManifest;
+        protected IBOServiceManifest ServiceManifest;
         protected Db db;
 
-        public BaseService(Db db, IBackOficeServiceManifest serviceManifest )
+        public BaseService(Db db, IBOServiceManifest serviceManifest )
         {
             this.db = db;
             this.ServiceManifest = serviceManifest;

@@ -17,26 +17,58 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
     {
         public void Register(RegistrationHelper registrationHelper)
         {
-            // EndPoints
             IEnumerable<IEndPointConfiguration> endpoints = EndPointUtilities.LoadEndPoints("EndPoints.json");
-            registrationHelper.RegisterEndPoints(endpoints);
 
-            // --- BackOffice ---
+            registrationHelper
+
+            // EndPoints   (Endpoints must be registered FIRST) 
+            .RegisterEndPoints(endpoints)
+
+            // -- EndPoint Validator
+            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.InProcess, DataBaseProviderName.MSSQL)
+            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.InProcess, DataBaseProviderName.MySQL)
+
+            // --- BackOffice Services ---
             // MSSQL
-            registrationHelper.Register<IAccountssService, Artifacts.BackOffice.MSSQL.AccountsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL);
-            registrationHelper.Register<IPaymentsService, Artifacts.BackOffice.MSSQL.PaymentsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL);
+            .RegisterService<Artifacts.BackOffice.MSSQL.AccountsService, IAccountsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterService<Artifacts.BackOffice.MSSQL.PaymentsService, IPaymentsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL)
             // MySQL
-            registrationHelper.Register<IAccountssService, Artifacts.BackOffice.MySQL.AccountsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL);
-            registrationHelper.Register<IPaymentsService, Artifacts.BackOffice.MySQL.PaymentsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL);
+            .RegisterService<Artifacts.BackOffice.MySQL.AccountsService, IAccountsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL)
+            .RegisterService<Artifacts.BackOffice.MySQL.PaymentsService, IPaymentsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL)
 
-
-            // --- StoreFront ---
+            // --- StoreFront Services ---
             // MSSQL
-            registrationHelper.Register<IOrdersService, Artifacts.StoreFront.MSSQL.OrdersService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MSSQL);
-            registrationHelper.Register<IProductsService, Artifacts.StoreFront.MSSQL.ProductsService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MSSQL);
+            .RegisterService<Artifacts.StoreFront.MSSQL.OrdersService, IOrdersService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MSSQL)
+            .RegisterService<Artifacts.StoreFront.MSSQL.ProductsService, IProductsService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MSSQL)
             // MySQL
-            registrationHelper.Register<IOrdersService, Artifacts.StoreFront.MySQL.OrdersService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MySQL);
-            registrationHelper.Register<IProductsService, Artifacts.StoreFront.MySQL.ProductsService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MySQL);
+            .RegisterService<Artifacts.StoreFront.MySQL.OrdersService, IOrdersService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MySQL)
+            .RegisterService<Artifacts.StoreFront.MySQL.ProductsService, IProductsService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MySQL)
+
+            // DbContexts
+            .RegisterDbContext<Artifacts.BackOffice.Db>(API_Name.BackOffice)
+            .RegisterDbContext<Artifacts.StoreFront.Db>(API_Name.StoreFront)
+
+            // DbContextOptions
+            .RegisterDbContextOptions<DbContextOptions_MSSQL>(DataBaseProviderName.MSSQL)
+            .RegisterDbContextOptions<DbContextOptions_MySQL>(DataBaseProviderName.MySQL)
+
+            // Migration Contexts
+            .RegisterMigrationContext<Artifacts.BackOffice.Db_MSSQL>(API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterMigrationContext<Artifacts.BackOffice.Db_MySQL>(API_Name.BackOffice, DataBaseProviderName.MySQL)
+            .RegisterMigrationContext<Artifacts.StoreFront.Db_MSSQL>(API_Name.StoreFront, DataBaseProviderName.MSSQL)
+            .RegisterMigrationContext<Artifacts.StoreFront.Db_MySQL>(API_Name.StoreFront, DataBaseProviderName.MySQL)
+
+
+            // Database Initalizers
+            .RegisterDatabaseInitializer<BODatabaseInitializer>(API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterDatabaseInitializer<BODatabaseInitializer>(API_Name.BackOffice, DataBaseProviderName.MySQL) // register same class for both providers.  If we had stored procs, etc. that were different we could just create a new class.
+            .RegisterDatabaseInitializer<SFDatabaseInitializer>(API_Name.StoreFront, DataBaseProviderName.MSSQL)
+            .RegisterDatabaseInitializer<SFDatabaseInitializer>(API_Name.StoreFront, DataBaseProviderName.MySQL) 
+
+
+            // Service Manifests
+            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL);
         }
     }
 }
