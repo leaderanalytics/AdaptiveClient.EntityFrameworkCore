@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaderAnalytics.AdaptiveCli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaderAnalytics.AdaptiveClient.EntityFramework.Tests", "LeaderAnalytics.AdaptiveClient.EntityFramework.Tests\LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.csproj", "{F4FEFCBF-0116-49CB-B213-41F0F0DE7100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories", "LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories\LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories.csproj", "{0DA4E602-03E5-4DC5-84B8-EE858B3F91A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories", "LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories\LeaderAnalytics.AdaptiveClient.EntityFramework.MigrationFactories.csproj", "{0DA4E602-03E5-4DC5-84B8-EE858B3F91A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifacts", "Artifacts", "{7647F58A-9B55-4E24-8B23-15D56436B3CA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
