@@ -22,7 +22,12 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
             this.resolver = resolver;
         }
 
-        public virtual async Task<DatabaseValidationResult> VerifyDatabase(IEndPointConfiguration endPoint) 
+        /// <summary>
+        /// Creates a database if it does not exist and/or applies pending migrations, if any.
+        /// </summary>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>DatabaseValidationResult</returns>
+        public virtual async Task<DatabaseValidationResult> CreateOrUpdateDatabase(IEndPointConfiguration endPoint) 
         {
             DatabaseValidationResult result = new DatabaseValidationResult();
             DatabaseStatus status = await GetDatabaseStatus(endPoint);
@@ -34,6 +39,11 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
             return result;
         }
 
+        /// <summary>
+        /// Checks if a database exists or if there are pending migrations.
+        /// </summary>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>DatabaseStatus</returns>
         public virtual async Task<DatabaseStatus> GetDatabaseStatus(IEndPointConfiguration endPoint)
         {
             DbContext context = resolver.ResolveMigrationContext(endPoint);
@@ -47,6 +57,11 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
             return DatabaseStatus.ConsistentWithModel;
         }
 
+        /// <summary>
+        /// Applies pending migrations, if any.
+        /// </summary>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>A list of names of migrations that were applied.</returns>
         public virtual async Task<List<string>> ApplyMigrations(IEndPointConfiguration endPoint) 
         {
             DbContext context = resolver.ResolveMigrationContext(endPoint);
@@ -65,6 +80,11 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
             return migrations;
         }
 
+        /// <summary>
+        /// Drops database.
+        /// </summary>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns></returns>
         public virtual async Task DropDatabase(IEndPointConfiguration endPoint) 
         {
             DbContext context = resolver.ResolveDbContext(endPoint);

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
-using LeaderAnalytics.AdaptiveClient;
+using LeaderAnalytics.AdaptiveClient.EntityFramework;
 
-namespace LeaderAnalytics.AdaptiveClient.EntityFramework
+namespace LeaderAnalytics.AdaptiveClient
 {
     public static class ResolutionHelperExtensions
     {
+        /// <summary>
+        /// Returns an instance of DbContext keyed to the API_Name of the passed IEndPointConfiguration.
+        /// </summary>
+        /// <param name="helper">An instance of ResolutionHelper.</param>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>DbContext</returns>
         public static DbContext ResolveDbContext(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
             if (ep == null)
@@ -34,10 +40,11 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
         }
 
         /// <summary>
-        /// This overload is primarily for internal use by AdaptiveClient.
+        /// This overload is primarily for internal use by AdaptiveClient.  Resolves an implementation of IDbContextOptions using 
+        /// EndPointContext.CurrentEndPoint which is set internally by AdaptiveClient.
         /// </summary>
-        /// <param name="helper"></param>
-        /// <returns></returns>
+        /// <param name="helper">An instance of ResolutionHelper.</param>
+        /// <returns>An implementation of IDbContextOptions</returns>
         public static IDbContextOptions ResolveDbContextOptions(this ResolutionHelper helper) 
         {
             Func<IEndPointConfiguration> epFactory = helper.cxt.Resolve<Func<IEndPointConfiguration>>();  // Registered by AdaptiveClient.  Returns EndPointContext.CurrentEndPoint 
@@ -50,6 +57,12 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
             return ResolveDbContextOptions(helper, ep);
         }
 
+        /// <summary>
+        /// Returns an implementation of IDbContextOptions keyed to the ProviderName of the passed IEndPointConfiguration.
+        /// </summary>
+        /// <param name="helper">An instance of ResolutionHelper.</param>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>An implementation of IDbContextOptions.</returns>
         public static IDbContextOptions ResolveDbContextOptions(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
             IDbContextOptions options = helper.cxt.ResolveOptionalKeyed<IDbContextOptions>(ep.ProviderName, new TypedParameter(typeof(string), ep.ConnectionString));
@@ -61,14 +74,16 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
         }
 
         /// <summary>
-        /// A migration context is a placeholder type that can be registered against a specific API_Name and ProviderName.
-        /// One or more migration contexts might derive from the same DBContext.  The type name of each migration context is 
+        /// Returns a MigrationContext which is a placeholder type that derives from DbContext.  The MigrationContext that is
+        /// returned is keyed to API_Name and ProviderName of the passed IEndPointConfiguration.
+        /// One or more MigrationContexts might derive from the same DBContext.  The type name of each migration context is 
         /// used by AdaptiveClient as a key for resolving supporting objects such as DbContextOptions.  The type name of the
         /// migration context is also used by EF itself for creating migrations and updating the 
         /// database (--context command line option).
         /// </summary>
-        /// <param name="ep"></param>
-        /// <returns></returns>
+        /// <param name="helper">An instance of ResolutionHelper.</param>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>DbContext</returns>
         public static DbContext ResolveMigrationContext(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
             IDbContextOptions options = null;
@@ -85,6 +100,13 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
             return helper.cxt.ResolveOptionalKeyed<IMigrationContext>(ep.API_Name + ep.ProviderName, new TypedParameter(typeof(DbContextOptions), options.Options)) as DbContext;
         }
 
+        /// <summary>
+        /// Returns an instance of IDatabaseInitializer which is used to seed a database after it is created or a migration is applied. The instance
+        /// of IDatabaseInitializer that is returned is keyed to the API_Name and ProviderName of the passed IEndPointConfiguration.
+        /// </summary>
+        /// <param name="helper">An instance of ResolutionHelper.</param>
+        /// <param name="ep">The IEndPointConfiguration whose properties will be used as keys.</param>
+        /// <returns>IDatabaseInitializer</returns>
         public static IDatabaseInitializer ResolveDatabaseInitializer(this ResolutionHelper helper, IEndPointConfiguration ep)
         {
             DbContext context = null;

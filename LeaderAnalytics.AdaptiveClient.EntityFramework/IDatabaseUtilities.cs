@@ -8,7 +8,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework
 {
     public interface IDatabaseUtilities
     {
-        Task<DatabaseValidationResult> VerifyDatabase(IEndPointConfiguration endPoint);
+        Task<DatabaseValidationResult> CreateOrUpdateDatabase(IEndPointConfiguration endPoint);
         Task<DatabaseStatus> GetDatabaseStatus(IEndPointConfiguration endPoint);
         Task<List<string>> ApplyMigrations(IEndPointConfiguration endPoint);
         Task DropDatabase(IEndPointConfiguration endPoint);

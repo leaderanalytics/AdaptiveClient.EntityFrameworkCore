@@ -6,13 +6,13 @@ using LeaderAnalytics.AdaptiveClient;
 
 namespace LeaderAnalytics.AdaptiveClient.EntityFramework
 {
-    public class ServiceManifestFactory 
+    public abstract class ServiceManifestFactory 
     {
         public Func<IEndPointConfiguration> EndPointFactory { get; set; }
         public ResolutionHelper ResolutionHelper { get; set; }
         private bool disposed;
 
-        protected TService Create<TService>()
+        protected virtual TService Create<TService>()
         {
             IEndPointConfiguration ep = EndPointFactory();
             return ResolutionHelper.ResolveClient<TService>(ep.EndPointType, ep.ProviderName);
