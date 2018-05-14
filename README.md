@@ -20,7 +20,7 @@ Utilities and classes for using [AdaptiveClient](https://github.com/leaderanalyt
 ## Interfaces
 ### `IDataBaseUtilities`
 * Methods for resolving and working with DbContext.  See `DatabaseUtilities` implementation.
-### `IDataInitializer`
+### `IDatabaseInitializer`
 * Method for seeding a database when it is created or when a migration is applied.
  
 ### `IDbContextOptions`
@@ -30,14 +30,14 @@ Utilities and classes for using [AdaptiveClient](https://github.com/leaderanalyt
 *  A placeholder interface for keying a MigrationContext
 
 ## RegistrationHelper Extensions
-* **RegisterDbContext** Keys a class derived from `DbContext` to an API_Name.
-* **RegisterDbContextOptions**  Keys a class that implements IDbContextOptions to a specific provider such as MSSQL or MySQL.
-* **RegisterMigrationContext** 
-* **RegisterDatabaseInitializer**
-* **RegisterServiceManifest**
+* **RegisterDbContext**  - Keys a class derived from `DbContext` to an API_Name.
+* **RegisterDbContextOptions**  -   Keys a class that implements IDbContextOptions to a specific provider such as MSSQL or MySQL.
+* **RegisterMigrationContext**  -  Allows EntityFramework to reflect on an assembly and resolve a DbContext to a specific provider such as MSSQL or MySQL.
+* **RegisterDatabaseInitializer**  - Keys a class that provides initialization services such as seeding a newly created database.
+* **RegisterServiceManifest**  - Keys a class derived from `ServiceManifestFactory` to a specific provider and end point type.
 
 ## ResolutionHelper Extensions
-* **ResolveDbContext**
-* **ResolveDbContextOptions**
-* **ResolveMigrationContext**
-* **ResolveDatabaseInitializer**
+* **ResolveDbContext**  - Resolves a `DbContext` instance using keys provided by a `IEndPointConfiguration` parameter.
+* **ResolveDbContextOptions**  - Resolves an instance of `DbContextOptions`  using keys provided by a `IEndPointConfiguration` parameter.
+* **ResolveMigrationContext**  - Resolves an implementation of `IMigrationContext` using keys provided by a `IEndPointConfiguration` parameter.
+* **ResolveDatabaseInitializer**  - Resolves an implementation of `IDatabaseInitalizer` using keys provided by a `IEndPointConfiguration` parameter.

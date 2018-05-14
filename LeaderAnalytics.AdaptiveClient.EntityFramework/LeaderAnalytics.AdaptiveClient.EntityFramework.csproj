@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Sam Wheat, LeaderAnalytics</Authors>
     <Company>Leader Analytics</Company>
-    <Description>Utility methods for working with DBContext.  Resolve DBContext from EndPoint, create database, apply migrations, drop database.</Description>
+    <Description>Utility classes and methods for using AdaptiveClient to work with DBContext and other Entity Framework Core objects.  Build loosely coupled services, readily accessible via a lightweight façade. Easily build your service layer to use multiple providers (MSSQL, MySQL, SQLite) with no additional infrastructure.  Use connection string objects to as keys to resolve specific implementations of DbContext for migrations and testing.</Description>
     <Copyright>2018 Leader Analytics</Copyright>
     <PackageProjectUrl>https://github.com/leaderanalytics/AdaptiveClient.EntityFramework</PackageProjectUrl>
     <PackageIconUrl>https://static-s.aa-cdn.net/img/ios/776959045/458370cf178aacd41bc6cf251dd4bd68?v=1</PackageIconUrl>
