@@ -25,24 +25,24 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
             .RegisterEndPoints(endpoints)
 
             // -- EndPoint Validator
-            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.InProcess, DataBaseProviderName.MSSQL)
-            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.InProcess, DataBaseProviderName.MySQL)
+            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.DBMS, DataBaseProviderName.MSSQL)
+            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.DBMS, DataBaseProviderName.MySQL)
 
             // --- BackOffice Services ---
             // MSSQL
-            .RegisterService<Artifacts.BackOffice.MSSQL.AccountsService, IAccountsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL)
-            .RegisterService<Artifacts.BackOffice.MSSQL.PaymentsService, IPaymentsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterService<Artifacts.BackOffice.MSSQL.AccountsService, IAccountsService>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterService<Artifacts.BackOffice.MSSQL.PaymentsService, IPaymentsService>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MSSQL)
             // MySQL
-            .RegisterService<Artifacts.BackOffice.MySQL.AccountsService, IAccountsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL)
-            .RegisterService<Artifacts.BackOffice.MySQL.PaymentsService, IPaymentsService>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL)
+            .RegisterService<Artifacts.BackOffice.MySQL.AccountsService, IAccountsService>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MySQL)
+            .RegisterService<Artifacts.BackOffice.MySQL.PaymentsService, IPaymentsService>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MySQL)
 
             // --- StoreFront Services ---
             // MSSQL
-            .RegisterService<Artifacts.StoreFront.MSSQL.OrdersService, IOrdersService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MSSQL)
-            .RegisterService<Artifacts.StoreFront.MSSQL.ProductsService, IProductsService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MSSQL)
+            .RegisterService<Artifacts.StoreFront.MSSQL.OrdersService, IOrdersService>(EndPointType.DBMS, API_Name.StoreFront, DataBaseProviderName.MSSQL)
+            .RegisterService<Artifacts.StoreFront.MSSQL.ProductsService, IProductsService>(EndPointType.DBMS, API_Name.StoreFront, DataBaseProviderName.MSSQL)
             // MySQL
-            .RegisterService<Artifacts.StoreFront.MySQL.OrdersService, IOrdersService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MySQL)
-            .RegisterService<Artifacts.StoreFront.MySQL.ProductsService, IProductsService>(EndPointType.InProcess, API_Name.StoreFront, DataBaseProviderName.MySQL)
+            .RegisterService<Artifacts.StoreFront.MySQL.OrdersService, IOrdersService>(EndPointType.DBMS, API_Name.StoreFront, DataBaseProviderName.MySQL)
+            .RegisterService<Artifacts.StoreFront.MySQL.ProductsService, IProductsService>(EndPointType.DBMS, API_Name.StoreFront, DataBaseProviderName.MySQL)
 
             // DbContexts
             .RegisterDbContext<Artifacts.BackOffice.Db>(API_Name.BackOffice)
@@ -59,7 +59,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
             .RegisterMigrationContext<Artifacts.StoreFront.Db_MySQL>(API_Name.StoreFront, DataBaseProviderName.MySQL)
 
 
-            // Database Initalizers
+            // Database Initializers
             .RegisterDatabaseInitializer<BODatabaseInitializer>(API_Name.BackOffice, DataBaseProviderName.MSSQL)
             .RegisterDatabaseInitializer<BODatabaseInitializer>(API_Name.BackOffice, DataBaseProviderName.MySQL) // register same class for both providers.  If we had stored procs, etc. that were different we could just create a new class.
             .RegisterDatabaseInitializer<SFDatabaseInitializer>(API_Name.StoreFront, DataBaseProviderName.MSSQL)
@@ -67,8 +67,8 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
 
 
             // Service Manifests
-            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MSSQL)
-            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.InProcess, API_Name.BackOffice, DataBaseProviderName.MySQL);
+            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MSSQL)
+            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MySQL);
         }
     }
 }

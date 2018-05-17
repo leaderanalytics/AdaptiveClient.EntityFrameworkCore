@@ -12,7 +12,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOff
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
-        public Db(ResolutionHelper resolver) : base(resolver.ResolveDbContextOptions().Options)
+        public Db(Func<IDbContextOptions> dbContextOptionsFactory) : base(dbContextOptionsFactory().Options)
         {
 
         }

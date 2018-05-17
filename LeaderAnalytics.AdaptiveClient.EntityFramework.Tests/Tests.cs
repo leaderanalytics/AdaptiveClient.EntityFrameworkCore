@@ -121,8 +121,8 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
 
             using (var scope = Container.BeginLifetimeScope(builder =>
             {
-                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.InProcess + DataBaseProviderName.MSSQL);
-                builder.RegisterInstance(fakeMySQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.InProcess + DataBaseProviderName.MySQL);
+                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + DataBaseProviderName.MSSQL);
+                builder.RegisterInstance(fakeMySQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + DataBaseProviderName.MySQL);
             }))
             {
                 IAdaptiveClient<IBOServiceManifest> client = scope.Resolve<IAdaptiveClient<IBOServiceManifest>>();
@@ -143,7 +143,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
 
             using (var scope = Container.BeginLifetimeScope(builder =>
             {
-                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.InProcess + DataBaseProviderName.MSSQL);
+                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + DataBaseProviderName.MSSQL);
             
             }))
             {
@@ -156,19 +156,19 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
         [Test]
         public async Task AdaptiveClient_falls_back_to_MySQL_on_Try()
         {
-            int inprocessCalls = 0;
+            int DBMSCalls = 0;
             Mock<IAccountsService> fakeMSSQLAccountsService = new Mock<IAccountsService>();
             fakeMSSQLAccountsService.Setup(x => x.GetAccountByID(It.Is<int>(i => i == 1))).ReturnsAsync(new Account { Name = DataBaseProviderName.MSSQL });
             fakeMSSQLAccountsService.Setup(x => x.GetAccountByID(It.Is<int>(i => i == 2))).Throws(new Exception("boo"));
             Mock<IAccountsService> fakeMySQLAccountsService = new Mock<IAccountsService>();
             fakeMySQLAccountsService.Setup(x => x.GetAccountByID(It.IsAny<int>())).ReturnsAsync(new Account { Name = DataBaseProviderName.MySQL });
             Mock<INetworkUtilities> fakeNetworkUtilties = new Mock<INetworkUtilities>();
-            fakeNetworkUtilties.Setup(x => x.VerifyDBServerConnectivity(It.IsAny<string>())).Callback(() => inprocessCalls++).Returns(inprocessCalls < 2);
+            fakeNetworkUtilties.Setup(x => x.VerifyDBServerConnectivity(It.IsAny<string>())).Callback(() => DBMSCalls++).Returns(DBMSCalls < 2);
 
             using (var scope = Container.BeginLifetimeScope(builder =>
             {
-                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.InProcess + DataBaseProviderName.MSSQL);
-                builder.RegisterInstance(fakeMySQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.InProcess + DataBaseProviderName.MySQL);
+                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + DataBaseProviderName.MSSQL);
+                builder.RegisterInstance(fakeMySQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + DataBaseProviderName.MySQL);
             }))
             {
                 IAdaptiveClient<IBOServiceManifest> client = scope.Resolve<IAdaptiveClient<IBOServiceManifest>>();
