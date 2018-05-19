@@ -137,18 +137,20 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
         {
             // PaymentsService calls AccountsService internally.  
             // In this test we mock AccountService so we know it is resolved and accessible from within PaymentsService.
-
+            
+            IEndPointConfiguration ep = EndPoints.First(x => x.ProviderName == CurrentDatabaseProviderName && x.API_Name == API_Name.BackOffice);
+            await DropAndRecreate(ep);
             Mock<IAccountsService> fakeMSSQLAccountsService = new Mock<IAccountsService>();
             fakeMSSQLAccountsService.Setup(x => x.GetAccountByID(It.IsAny<int>())).ReturnsAsync(new Account { Name = "TEST" });
 
             using (var scope = Container.BeginLifetimeScope(builder =>
             {
-                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + DataBaseProviderName.MSSQL);
-            
+                builder.RegisterInstance(fakeMSSQLAccountsService.Object).Keyed<IAccountsService>(EndPointType.DBMS + CurrentDatabaseProviderName);
+
             }))
             {
                 IAdaptiveClient<IBOServiceManifest> client = scope.Resolve<IAdaptiveClient<IBOServiceManifest>>();
-                Account account = await client.CallAsync(x => x.PaymentsService.GetAccountForPaymentID(1));
+                Account account = await client.CallAsync(x => x.PaymentsService.GetAccountForPaymentID(1), ep.Name);
                 Assert.AreEqual("TEST", account.Name);
             }
         }
@@ -156,14 +158,12 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
         [Test]
         public async Task AdaptiveClient_falls_back_to_MySQL_on_Try()
         {
-            int DBMSCalls = 0;
             Mock<IAccountsService> fakeMSSQLAccountsService = new Mock<IAccountsService>();
             fakeMSSQLAccountsService.Setup(x => x.GetAccountByID(It.Is<int>(i => i == 1))).ReturnsAsync(new Account { Name = DataBaseProviderName.MSSQL });
             fakeMSSQLAccountsService.Setup(x => x.GetAccountByID(It.Is<int>(i => i == 2))).Throws(new Exception("boo"));
+
             Mock<IAccountsService> fakeMySQLAccountsService = new Mock<IAccountsService>();
             fakeMySQLAccountsService.Setup(x => x.GetAccountByID(It.IsAny<int>())).ReturnsAsync(new Account { Name = DataBaseProviderName.MySQL });
-            Mock<INetworkUtilities> fakeNetworkUtilties = new Mock<INetworkUtilities>();
-            fakeNetworkUtilties.Setup(x => x.VerifyDBServerConnectivity(It.IsAny<string>())).Callback(() => DBMSCalls++).Returns(DBMSCalls < 2);
 
             using (var scope = Container.BeginLifetimeScope(builder =>
             {

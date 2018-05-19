@@ -1,15 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using LeaderAnalytics.AdaptiveClient;
+using LeaderAnalytics.AdaptiveClient.Utilities;
 using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts;
 using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice;
 using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront;
-using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice.MSSQL;
-using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.BackOffice.MySQL;
-using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront.MSSQL;
-using LeaderAnalytics.AdaptiveClient.EntityFramework.Tests.Artifacts.StoreFront.MySQL;
-
 
 namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
 {
@@ -17,16 +14,18 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
     {
         public void Register(RegistrationHelper registrationHelper)
         {
-            IEnumerable<IEndPointConfiguration> endpoints = EndPointUtilities.LoadEndPoints("EndPoints.json");
+            IEnumerable<IEndPointConfiguration> endPoints = EndPointUtilities.LoadEndPoints("EndPoints.json");
+            endPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(endPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            endPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(endPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
 
             registrationHelper
 
             // EndPoints   (Endpoints must be registered FIRST) 
-            .RegisterEndPoints(endpoints)
+            .RegisterEndPoints(endPoints)
 
             // -- EndPoint Validator
-            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.DBMS, DataBaseProviderName.MSSQL)
-            .RegisterEndPointValidator<AdaptiveClient.InProcessEndPointValidator>(EndPointType.DBMS, DataBaseProviderName.MySQL)
+            .RegisterEndPointValidator<MSSQL_EndPointValidator>(EndPointType.DBMS, DataBaseProviderName.MSSQL)
+            .RegisterEndPointValidator<MySQL_EndPointValidator>(EndPointType.DBMS, DataBaseProviderName.MySQL)
 
             // --- BackOffice Services ---
             // MSSQL

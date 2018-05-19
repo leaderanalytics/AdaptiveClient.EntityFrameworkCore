@@ -19,7 +19,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
         protected IContainer Container { get; set; }
         protected IEnumerable<IEndPointConfiguration> EndPoints { get; set; }
         protected IAdaptiveClient<IBOServiceManifest> BOServiceClient;
-        protected IDatabaseUtilities DatabaseUtilities;
+        
         protected readonly string CurrentDatabaseProviderName;
 
         public BaseTest(string databaseProviderName)
@@ -29,8 +29,12 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
 
         protected async Task DropAndRecreate(IEndPointConfiguration ep)
         {
-            await DatabaseUtilities.DropDatabase(ep);
-            await DatabaseUtilities.ApplyMigrations(ep);
+            using (ILifetimeScope scope = Container.BeginLifetimeScope())
+            {
+                IDatabaseUtilities databaseUtilities = Container.Resolve<IDatabaseUtilities>();
+                await databaseUtilities.DropDatabase(ep);
+                await databaseUtilities.ApplyMigrations(ep);
+            }
         }
 
         protected async Task CreateTestArtifacts()
@@ -45,7 +49,6 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFramework.Tests
             registrationHelper.RegisterModule(new AdaptiveClientModule());
             Container = Builder.Build();
             BOServiceClient = Container.Resolve<IAdaptiveClient<IBOServiceManifest>>();
-            DatabaseUtilities = Container.Resolve<IDatabaseUtilities>();
         }
     }
 }
