@@ -1,0 +1,29 @@
+﻿To add Migrations:
+	Delete files and folders under Artifacts/BackOffice/Migrations
+	Delete files and folders under Artifacts/StoreFront/Migrations
+	Open SQL Server Management Studio and/or MySQL Workbench. Delete AdaptiveClient_StoreFront database and AdaptiveClient_BackOffice database.
+	Open a command window and change directory to C:\Git\AdaptiveClient.EntityFramework\LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests OR dir where .Tests project lives.
+	Modify path in --startup-project parameter for each command if necessary.
+	Copy/paste each command into command window:
+
+
+	--- BackOffice ---
+	
+	MSSQL:
+		dotnet ef migrations add CreateDatabase --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice.Db_MSSQL  --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --output-dir Artifacts/BackOffice/Migrations/MSSQL
+		dotnet ef database update --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice.Db_MSSQL
+
+	MySQL:
+		dotnet ef migrations add CreateDatabase --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice.Db_MySQL  --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --output-dir Artifacts/BackOffice/Migrations/MySQL
+		dotnet ef database update --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice.Db_MySQL
+
+
+	--- StoreFront ---
+
+	MSSQL:
+		dotnet ef migrations add CreateDatabase --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront.Db_MSSQL  --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --output-dir Artifacts/StoreFront/Migrations/MSSQL
+		dotnet ef database update --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront.Db_MSSQL
+
+	MySQL:
+		dotnet ef migrations add CreateDatabase --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront.Db_MySQL  --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --output-dir Artifacts/StoreFront/Migrations/MySQL
+		dotnet ef database update --startup-project ../LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories --context LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront.Db_MySQL

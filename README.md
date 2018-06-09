@@ -1,4 +1,4 @@
-# AdaptiveClient.EntityFramework
+# AdaptiveClient.EntityFrameworkCore
 
 Utilities and classes for using [AdaptiveClient](https://github.com/leaderanalytics/AdaptiveClient) to work with DBContext and migrations.
 
