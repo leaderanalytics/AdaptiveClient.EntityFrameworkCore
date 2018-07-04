@@ -194,13 +194,11 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
             }
         }
 
-        public async Task Single_DbContext_instance_is_injected_into_all_services()
+        [Test]
+        public void Single_DbContext_instance_is_injected_into_all_services()
         {
-            IAdaptiveClient<IStoreFrontServiceManifest> client = Container.Resolve<IAdaptiveClient<IStoreFrontServiceManifest>>();
-           
-
-            ordersDb = await client.TryAsync(async x => await x.OrdersService.GetDbContext());
-            productsDb = await client.TryAsync(async x => await x.OrdersService.GetDbContext());
+            IAdaptiveClient<ISFServiceManifest> client = Container.Resolve<IAdaptiveClient<ISFServiceManifest>>();
+            Assert.IsTrue(client.Call(x => x.OrdersService.AreDbContextsEqual()));
         }
     }
 }

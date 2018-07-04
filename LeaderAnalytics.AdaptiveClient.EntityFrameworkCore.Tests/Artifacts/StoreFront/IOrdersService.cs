@@ -10,6 +10,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
     {
         Task<Order> GetOrderByID(int id);
         Task SaveOrder(Order order);
-        Task<Db> GetDbContext();
+        Db GetDbContext();
+        bool AreDbContextsEqual();
     }
 }

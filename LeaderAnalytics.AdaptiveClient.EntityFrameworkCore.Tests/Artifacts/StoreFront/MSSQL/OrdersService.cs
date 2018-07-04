@@ -7,7 +7,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     public class OrdersService : BaseService, IOrdersService
     {
-        public OrdersService(Db db, IStoreFrontServiceManifest serviceManifest) : base(db, serviceManifest)
+        public OrdersService(Db db, ISFServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
 
@@ -21,10 +21,14 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
             throw new NotImplementedException();
         }
 
-        public async Task<Db> GetDbContext()
-        {
-            ServiceManifest.ProductsService.GetDbContext();
+        public Db GetDbContext()
+        { 
             return this.db; 
+        }
+
+        public bool AreDbContextsEqual()
+        {
+            return Object.ReferenceEquals(this.db, ServiceManifest.ProductsService.GetDbContext());
         }
     }
 }

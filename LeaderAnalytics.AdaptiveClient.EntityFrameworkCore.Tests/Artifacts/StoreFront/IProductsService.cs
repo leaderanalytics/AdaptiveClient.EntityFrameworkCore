@@ -9,6 +9,6 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
     {
         Task<Product> GetProductByID(int id);
         Task SaveProduct(Product product);
-        Task<Db> GetDbContext();
+        Db GetDbContext();
     }
 }

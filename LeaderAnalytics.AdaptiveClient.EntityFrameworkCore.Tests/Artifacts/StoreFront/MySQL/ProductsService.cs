@@ -7,7 +7,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     class ProductsService: LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront.MSSQL.ProductsService
     {
-        public ProductsService(Db db, IStoreFrontServiceManifest serviceManifest) : base(db, serviceManifest)
+        public ProductsService(Db db, ISFServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
     }

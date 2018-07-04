@@ -13,7 +13,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts
         public DbContextOptions_MySQL(string connectionString)
         {
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseMySQL(connectionString);
+            builder.UseMySql(connectionString);
             Options = builder.Options;
         }
     }

@@ -6,10 +6,10 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     public class BaseService : IDisposable
     {
-        protected IStoreFrontServiceManifest ServiceManifest;
+        protected ISFServiceManifest ServiceManifest;
         protected Db db;  
 
-        public BaseService(Db db, IStoreFrontServiceManifest serviceManifest)
+        public BaseService(Db db, ISFServiceManifest serviceManifest)
         {
             this.db = db;
             this.ServiceManifest = serviceManifest;

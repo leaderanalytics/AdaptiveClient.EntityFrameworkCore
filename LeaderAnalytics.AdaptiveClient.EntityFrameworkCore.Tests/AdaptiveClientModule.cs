@@ -67,7 +67,8 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
 
             // Service Manifests
             .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MSSQL)
-            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MySQL);
+            .RegisterServiceManifest<Artifacts.BackOffice.BOServiceManifest, IBOServiceManifest>(EndPointType.DBMS, API_Name.BackOffice, DataBaseProviderName.MySQL)
+            .RegisterServiceManifest<Artifacts.StoreFront.SFServiceManifest, ISFServiceManifest>(EndPointType.DBMS, API_Name.StoreFront, DataBaseProviderName.MSSQL);
         }
     }
 }

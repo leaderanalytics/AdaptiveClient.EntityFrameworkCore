@@ -7,7 +7,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     public class OrdersService : LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront.MSSQL.OrdersService
     {
-        public OrdersService(Db db, IStoreFrontServiceManifest serviceManifest) : base(db, serviceManifest)
+        public OrdersService(Db db, ISFServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
 

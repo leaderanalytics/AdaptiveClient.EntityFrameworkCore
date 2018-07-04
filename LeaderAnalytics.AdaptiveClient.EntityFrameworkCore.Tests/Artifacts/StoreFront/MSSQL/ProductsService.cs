@@ -7,7 +7,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     class ProductsService: BaseService, IProductsService
     {
-        public ProductsService(Db db, IStoreFrontServiceManifest serviceManifest) : base(db, serviceManifest)
+        public ProductsService(Db db, ISFServiceManifest serviceManifest) : base(db, serviceManifest)
         {
         }
 
@@ -21,7 +21,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
             throw new NotImplementedException();
         }
 
-        public async Task<Db> GetDbContext()
+        public Db GetDbContext()
         {
             return this.db;
         }
