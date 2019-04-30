@@ -6,7 +6,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     public class SFServiceManifest : ServiceManifestFactory, ISFServiceManifest
     {
-        public IOrdersService OrdersService { get => Create<IOrdersService>(); }
         public IProductsService ProductsService { get => Create<IProductsService>(); }
+        public IOrdersService OrdersService { get => Create<IOrdersService>(); }
     }
 }

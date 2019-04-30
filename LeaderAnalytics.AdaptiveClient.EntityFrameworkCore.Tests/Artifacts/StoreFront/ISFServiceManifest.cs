@@ -6,7 +6,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.Sto
 {
     public interface ISFServiceManifest : IDisposable
     {
-        IOrdersService OrdersService {get;}
+        IOrdersService OrdersService { get; }
         IProductsService ProductsService { get; }
     }
 }
