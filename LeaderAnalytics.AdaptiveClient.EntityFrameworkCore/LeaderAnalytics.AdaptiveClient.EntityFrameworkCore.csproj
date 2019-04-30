@@ -17,6 +17,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.31.2</Version>
     <PackageId>AdaptiveClient.EntityFrameworkCore</PackageId>
+    <PackageLicenseUrl>https://github.com/leaderanalytics/AdaptiveClient.EntityFramework/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
