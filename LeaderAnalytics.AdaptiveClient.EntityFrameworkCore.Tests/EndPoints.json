@@ -7,7 +7,7 @@
       "Preference": "10",
       "EndPointType": "DBMS",
       "ProviderName": "MSSQL",
-      "ConnectionString": "Data Source=.\\SQLSERVER;Initial Catalog=AdaptiveClientEF_StoreFront;Integrated Security=True;MultipleActiveResultSets=True;"
+      "ConnectionString": "Data Source=.\\SQLEXPRESS;Initial Catalog=AdaptiveClientEF_StoreFront;Integrated Security=True;MultipleActiveResultSets=True;"
     },
 
     {
@@ -17,12 +17,12 @@
       "Preference": "10",
       "EndPointType": "DBMS",
       "ProviderName": "MSSQL",
-      "ConnectionString": "Data Source=.\\SQLSERVER;Initial Catalog=AdaptiveClientEF_BackOffice;Integrated Security=True;MultipleActiveResultSets=True;"
+      "ConnectionString": "Data Source=.\\SQLEXPRESS;Initial Catalog=AdaptiveClientEF_BackOffice;Integrated Security=True;MultipleActiveResultSets=True;"
     },
 
     {
       "Name": "StoreFront_MySQL",
-      "IsActive": "true",
+      "IsActive": "false",
       "API_Name": "StoreFront",
       "Preference": "20",
       "EndPointType": "DBMS",
@@ -32,7 +32,7 @@
 
     {
       "Name": "BackOffice_MySQL",
-      "IsActive": "true",
+      "IsActive": "false",
       "API_Name": "BackOffice",
       "Preference": "20",
       "EndPointType": "DBMS",

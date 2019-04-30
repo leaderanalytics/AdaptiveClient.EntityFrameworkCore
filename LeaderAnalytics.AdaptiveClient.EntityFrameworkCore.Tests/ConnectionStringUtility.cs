@@ -17,10 +17,10 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
         public static string BuildConnectionString(string connectionString)
         {
             ConfigurationBuilder configBuilder = new ConfigurationBuilder();
-            configBuilder.AddJsonFile("C:\\Users\\sam\\AppData\\Roaming\\Blog\\appsettings.Development.json");
+            //configBuilder.AddJsonFile("C:\\Users\\sam\\AppData\\Roaming\\Blog\\appsettings.Development.json");
             IConfigurationRoot config = configBuilder.Build();
-            connectionString = connectionString.Replace("{MySQL_UserName}", config["Data:MySQLUserName"]);
-            connectionString = connectionString.Replace("{MySQL_Password}", config["Data:MySQLPassword"]);
+            //connectionString = connectionString.Replace("{MySQL_UserName}", config["Data:MySQLUserName"]);
+            //connectionString = connectionString.Replace("{MySQL_Password}", config["Data:MySQLPassword"]);
 
             //comment above two lines and uncomment two lines below if you wish.... .
 
