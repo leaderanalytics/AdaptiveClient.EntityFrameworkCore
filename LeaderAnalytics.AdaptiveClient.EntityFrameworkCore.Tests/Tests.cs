@@ -36,7 +36,6 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
         [Test]
         public async Task DropAndRecreateAllDatabases()
         {
-            //return;
             IDatabaseUtilities databaseUtilities = Container.Resolve<IDatabaseUtilities>();
             foreach (IEndPointConfiguration ep in EndPoints)
             {

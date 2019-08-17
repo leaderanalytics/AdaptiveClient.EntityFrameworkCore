@@ -11,7 +11,6 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore
         {
             base.Load(builder);
             builder.RegisterType<DatabaseUtilities>().As<IDatabaseUtilities>();
-            builder.RegisterType<ServiceManifestFactory>().InstancePerLifetimeScope().PropertiesAutowired();
             builder.Register<Func<IDbContextOptions>>(c => { ILifetimeScope cxt = c.Resolve<ILifetimeScope>(); return () => new ResolutionHelper(cxt).ResolveDbContextOptions(); });
         }
     }

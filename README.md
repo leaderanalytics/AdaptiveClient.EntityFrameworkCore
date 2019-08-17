@@ -1,6 +1,6 @@
 # AdaptiveClient.EntityFrameworkCore
 
-Utilities and classes for using [AdaptiveClient](https://github.com/leaderanalytics/AdaptiveClient) to work with DBContext and migrations.
+Utilities for using [AdaptiveClient](https://github.com/leaderanalytics/AdaptiveClient) to work with DBContext and migrations.
 
 ## Classes
 
@@ -10,8 +10,6 @@ Utilities and classes for using [AdaptiveClient](https://github.com/leaderanalyt
 ### `DatabaseValidationResult`
 * Returns names of applied migrations, if any, and if database was created.
 
-### `ServiceManifestFactory`
-* A base class that allows any service belonging to a specific API to be accessed from an instance of any other service belonging to the same API.
 
 ## Structures
 ### DatabaseStatus 
@@ -34,7 +32,6 @@ Utilities and classes for using [AdaptiveClient](https://github.com/leaderanalyt
 * **RegisterDbContextOptions**  -   Keys a class that implements IDbContextOptions to a specific provider such as MSSQL or MySQL.
 * **RegisterMigrationContext**  -  Allows EntityFramework to reflect on an assembly and resolve a DbContext to a specific provider such as MSSQL or MySQL.
 * **RegisterDatabaseInitializer**  - Keys a class that provides initialization services such as seeding a newly created database.
-* **RegisterServiceManifest**  - Keys a class derived from `ServiceManifestFactory` to a specific provider and end point type.
 
 ## ResolutionHelper Extensions
 * **ResolveDbContext**  - Resolves a `DbContext` instance using keys provided by a `IEndPointConfiguration` parameter.

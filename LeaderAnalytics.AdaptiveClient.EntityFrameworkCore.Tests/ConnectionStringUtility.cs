@@ -18,7 +18,9 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
         {
             ConfigurationBuilder configBuilder = new ConfigurationBuilder();
             //configBuilder.AddJsonFile("C:\\Users\\sam\\AppData\\Roaming\\Blog\\appsettings.Development.json");
+
             IConfigurationRoot config = configBuilder.Build();
+            
             //connectionString = connectionString.Replace("{MySQL_UserName}", config["Data:MySQLUserName"]);
             //connectionString = connectionString.Replace("{MySQL_Password}", config["Data:MySQLPassword"]);
 
