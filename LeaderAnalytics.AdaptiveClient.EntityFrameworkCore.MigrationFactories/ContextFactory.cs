@@ -28,7 +28,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories
         {
             string connectionString = ConnectionstringUtility.BuildConnectionString(ConnectionstringUtility.GetConnectionString("bin\\debug\\netcoreapp2.0\\EndPoints.json", API_Name.BackOffice, DataBaseProviderName.MySQL));
             DbContextOptionsBuilder dbOptions = new DbContextOptionsBuilder();
-            dbOptions.UseMySql(connectionString);
+            dbOptions.UseMySql(ServerVersion.AutoDetect(connectionString));
             Tests.Artifacts.BackOffice.Db_MySQL db = new Tests.Artifacts.BackOffice.Db_MySQL(dbOptions.Options);
             return db;
         }
@@ -52,7 +52,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.MigrationFactories
         {
             string connectionString = ConnectionstringUtility.BuildConnectionString(ConnectionstringUtility.GetConnectionString("bin\\debug\\netcoreapp2.0\\EndPoints.json", API_Name.StoreFront, DataBaseProviderName.MySQL));
             DbContextOptionsBuilder dbOptions = new DbContextOptionsBuilder();
-            dbOptions.UseMySql(connectionString);
+            dbOptions.UseMySql(ServerVersion.AutoDetect(connectionString));
             Tests.Artifacts.StoreFront.Db_MySQL db = new Tests.Artifacts.StoreFront.Db_MySQL(dbOptions.Options);
             return db;
         }

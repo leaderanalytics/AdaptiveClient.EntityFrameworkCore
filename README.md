@@ -2,6 +2,11 @@
 
 Utilities for using [AdaptiveClient](https://github.com/leaderanalytics/AdaptiveClient) to work with DBContext and migrations.
 
+
+### Change log
+
+2021-02-07 v2.0.0 - Migrate to .net 5. Drop support for .net framework. Update Entity Framework dependencies to EF Core 5.
+
 ## Classes
 
 ### `DatabaseUtilities`

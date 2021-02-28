@@ -13,7 +13,8 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts
         public DbContextOptions_MySQL(string connectionString)
         {
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseMySql(connectionString);
+            //https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/issues/1246
+            builder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); 
             Options = builder.Options;
         }
     }

@@ -14,7 +14,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
     {
         public void Register(RegistrationHelper registrationHelper)
         {
-            IEnumerable<IEndPointConfiguration> endPoints = EndPointUtilities.LoadEndPoints("EndPoints.json");
+            IEnumerable<IEndPointConfiguration> endPoints = EndPointUtilities.LoadEndPoints("appsettings.json");
 
             if (endPoints.Any(x => x.ProviderName == DataBaseProviderName.MySQL))
             {

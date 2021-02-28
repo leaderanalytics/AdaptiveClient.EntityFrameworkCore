@@ -39,7 +39,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
 
         protected async Task CreateTestArtifacts()
         {
-            EndPoints = EndPointUtilities.LoadEndPoints("EndPoints.json");
+            EndPoints = EndPointUtilities.LoadEndPoints("appsettings.json");
 
             if (EndPoints.Any(x => x.ProviderName == DataBaseProviderName.MySQL))
             {
