@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5</TargetFramework>
+    <TargetFramework>net6</TargetFramework>
     <Authors>Leader Analytics</Authors>
     <Company>Leader Analytics</Company>
     <Description>Utility classes and methods for using AdaptiveClient to work with DBContext and other Entity Framework Core objects.  Build loosely coupled services, readily accessible via a lightweight façade. Easily build your service layer to use multiple providers (MSSQL, MySQL, SQLite) with no additional infrastructure.  Use connection string objects to as keys to resolve specific implementations of DbContext for migrations and testing.</Description>
@@ -23,10 +23,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaptiveClient" Version="2.0.0" />
-    <PackageReference Include="Autofac" Version="6.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.3" />
+    <PackageReference Include="AdaptiveClient" Version="3.0.3" />
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
