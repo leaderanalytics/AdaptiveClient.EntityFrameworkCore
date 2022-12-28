@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore;
 
-namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore
+public class DatabaseValidationResult
 {
-    public class DatabaseValidationResult
-    {
-        public List<string> AppliedMigrations { get; set; }
-        public bool DatabaseWasCreated { get; set; }
+    public List<string> AppliedMigrations { get; set; }
+    public bool DatabaseWasCreated { get; set; }
 
-        public DatabaseValidationResult()
-        {
-            AppliedMigrations = new List<string>();
-        }
+    public DatabaseValidationResult()
+    {
+        AppliedMigrations = new List<string>();
     }
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice;
 
-namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice
+public interface IAccountsService
 {
-    public interface IAccountsService
-    {
-        Task<Account> GetAccountByID(int id);
-        Task<List<Account>> GetAccounts();
-        Task<int> SaveAccount(Account account);
-        Task<DateTime?> GetLastPaymentDate(int accountID);
-    }
+    Task<Account> GetAccountByID(int id);
+    Task<List<Account>> GetAccounts();
+    Task<int> SaveAccount(Account account);
+    Task<DateTime?> GetLastPaymentDate(int accountID);
 }

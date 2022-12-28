@@ -1,41 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront;
 
-namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront
+public class BaseService : IDisposable
 {
-    public class BaseService : IDisposable
+    protected ISFServiceManifest ServiceManifest;
+    protected Db db;  
+
+    public BaseService(Db db, ISFServiceManifest serviceManifest)
     {
-        protected ISFServiceManifest ServiceManifest;
-        protected Db db;  
+        this.db = db;
+        this.ServiceManifest = serviceManifest;
+    }
 
-        public BaseService(Db db, ISFServiceManifest serviceManifest)
+
+    #region IDisposable
+    private bool disposed;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
         {
-            this.db = db;
-            this.ServiceManifest = serviceManifest;
-        }
-
-
-        #region IDisposable
-        private bool disposed;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    disposed = true;
-                    db.Dispose();
-                }
+                disposed = true;
+                db.Dispose();
             }
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    #endregion
 }
