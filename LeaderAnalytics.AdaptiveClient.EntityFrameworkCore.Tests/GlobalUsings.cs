@@ -1,0 +1,14 @@
+﻿global using System;
+global using System.Linq;
+global using System.Collections.Generic;
+global using System.Text;
+global using System.Threading.Tasks;
+global using Microsoft.EntityFrameworkCore;
+global using LeaderAnalytics.AdaptiveClient.Utilities;
+global using LeaderAnalytics.AdaptiveClient.EntityFrameworkCore;
+global using LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts;
+global using LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.BackOffice;
+global using LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.Artifacts.StoreFront;
+global using NUnit.Framework;
+global using Autofac;
+global using Moq;

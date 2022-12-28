@@ -1,12 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore;
 
-namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore
+public interface IDatabaseInitializer
 {
-    public interface IDatabaseInitializer
-    {
-        Task Seed(string migrationName);
-    }
+    Task Seed(string migrationName);
 }

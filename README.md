@@ -5,6 +5,8 @@ Utilities for using [AdaptiveClient](https://github.com/leaderanalytics/Adaptive
 
 ### Change log
 
+2022-12-27 v4 - Migrate to .net 7 / EF 7.
+
 2021-02-07 v2.0.0 - Migrate to .net 5. Drop support for .net framework. Update Entity Framework dependencies to EF Core 5.
 
 ## Classes
