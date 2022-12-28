@@ -2,6 +2,12 @@
 
 Utilities for using [AdaptiveClient](https://github.com/leaderanalytics/AdaptiveClient) to work with DBContext and migrations.
 
+---
+
+Get the [Nuget package](https://www.nuget.org/packages/AdaptiveClient.EntityFrameworkCore)
+
+---
+
 
 ### Change log
 
