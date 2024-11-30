@@ -17,7 +17,7 @@ namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests
         public static string BuildConnectionString(string connectionString)
         {
             ConfigurationBuilder configBuilder = new ConfigurationBuilder();
-            configBuilder.AddJsonFile("O:\\LeaderAnalytics\\secrets.json");
+            configBuilder.AddJsonFile("C:\\Users\\sam\\OneDrive\\LeaderAnalytics\\secrets.json");
 
             IConfigurationRoot config = configBuilder.Build();
             

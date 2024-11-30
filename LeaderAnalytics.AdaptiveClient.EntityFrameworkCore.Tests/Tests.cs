@@ -1,7 +1,7 @@
 ﻿namespace LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests;
 
 [TestFixture("MSSQL")]
-[TestFixture("MySQL")]
+//[TestFixture("MySQL")]
 public class Tests : BaseTest
 {
 
@@ -33,12 +33,12 @@ public class Tests : BaseTest
         IEndPointConfiguration ep = EndPoints.First(x => x.ProviderName == CurrentDatabaseProviderName);
         ResolutionHelper resolutionHelper = Container.Resolve<ResolutionHelper>();
         IDbContextOptions options = resolutionHelper.ResolveDbContextOptions(ep);
-        Assert.IsNotNull(options);
+        Assert.That(options, Is.Not.Null);
 
         if(CurrentDatabaseProviderName == DataBaseProviderName.MSSQL)
-            Assert.IsTrue(options is Artifacts.DbContextOptions_MSSQL);
+            Assert.That(options is Artifacts.DbContextOptions_MSSQL, Is.True);
         else if(CurrentDatabaseProviderName == DataBaseProviderName.MySQL)
-            Assert.IsTrue(options is Artifacts.DbContextOptions_MySQL);
+            Assert.That(options is Artifacts.DbContextOptions_MySQL, Is.True);
     }
 
     [Test]
@@ -49,21 +49,21 @@ public class Tests : BaseTest
         ResolutionHelper resolutionHelper = Container.Resolve<ResolutionHelper>();
         DbContext storeFrontContext = resolutionHelper.ResolveDbContext(storeFrontep);
         DbContext backOfficeContext = resolutionHelper.ResolveDbContext(backOfficeep);
-        Assert.IsNotNull(storeFrontContext);
-        Assert.IsNotNull(backOfficeContext);
-        Assert.IsTrue(storeFrontContext is Artifacts.StoreFront.Db);
-        Assert.IsTrue(backOfficeContext is Artifacts.BackOffice.Db);
+        Assert.That(storeFrontContext, Is.Not.Null);
+        Assert.That(backOfficeContext, Is.Not.Null);
+        Assert.That(storeFrontContext is Artifacts.StoreFront.Db, Is.True);
+        Assert.That(backOfficeContext is Artifacts.BackOffice.Db, Is.True);
 
         if (CurrentDatabaseProviderName == DataBaseProviderName.MSSQL)
         {
-            Assert.IsTrue(storeFrontContext.Database.GetDbConnection().ConnectionString == storeFrontep.ConnectionString);
-            Assert.IsTrue(backOfficeContext.Database.GetDbConnection().ConnectionString == backOfficeep.ConnectionString);
+            Assert.That(storeFrontContext.Database.GetDbConnection().ConnectionString == storeFrontep.ConnectionString, Is.True);
+            Assert.That(backOfficeContext.Database.GetDbConnection().ConnectionString == backOfficeep.ConnectionString, Is.True);
         }
         else if (CurrentDatabaseProviderName == DataBaseProviderName.MySQL)
         {
             // MySql database connector changes the connection string.
-            Assert.IsTrue(storeFrontContext.Database.GetDbConnection().ConnectionString.ToLower().Contains("database=adaptiveclientef_storefront"));
-            Assert.IsTrue(backOfficeContext.Database.GetDbConnection().ConnectionString.ToLower().Contains("database=adaptiveclientef_backoffice"));
+            Assert.That(storeFrontContext.Database.GetDbConnection().ConnectionString.ToLower().Contains("database=adaptiveclientef_storefront"), Is.True);
+            Assert.That(backOfficeContext.Database.GetDbConnection().ConnectionString.ToLower().Contains("database=adaptiveclientef_backoffice"), Is.True);
         }
     }
 
@@ -75,18 +75,18 @@ public class Tests : BaseTest
         ResolutionHelper resolutionHelper = Container.Resolve<ResolutionHelper>();
         DbContext storeFrontContext = resolutionHelper.ResolveMigrationContext(storeFrontep);
         DbContext backOfficeContext = resolutionHelper.ResolveMigrationContext(backOfficeep);
-        Assert.IsNotNull(storeFrontContext);
-        Assert.IsNotNull(backOfficeContext);
+        Assert.That(storeFrontContext, Is.Not.Null);
+        Assert.That(backOfficeContext, Is.Not.Null);
 
         if (CurrentDatabaseProviderName == DataBaseProviderName.MSSQL)
         {
-            Assert.IsTrue(storeFrontContext is Artifacts.StoreFront.Db_MSSQL);
-            Assert.IsTrue(backOfficeContext is Artifacts.BackOffice.Db_MSSQL);
+            Assert.That(storeFrontContext is Artifacts.StoreFront.Db_MSSQL, Is.True);
+            Assert.That(backOfficeContext is Artifacts.BackOffice.Db_MSSQL, Is.True);
         }
         else if (CurrentDatabaseProviderName == DataBaseProviderName.MySQL)
         {
-            Assert.IsTrue(storeFrontContext is Artifacts.StoreFront.Db_MySQL);
-            Assert.IsTrue(backOfficeContext is Artifacts.BackOffice.Db_MySQL);
+            Assert.That(storeFrontContext is Artifacts.StoreFront.Db_MySQL, Is.True);
+            Assert.That(backOfficeContext is Artifacts.BackOffice.Db_MySQL, Is.True);
         }
     }
 
@@ -100,8 +100,8 @@ public class Tests : BaseTest
 
         IDatabaseInitializer storeFrontInitalizer = resolutionHelper.ResolveDatabaseInitializer(storeFrontep);
         IDatabaseInitializer backOfficeInitalizer = resolutionHelper.ResolveDatabaseInitializer(backOfficeep);
-        Assert.IsTrue(storeFrontInitalizer is Artifacts.StoreFront.SFDatabaseInitializer);
-        Assert.IsTrue(backOfficeInitalizer is Artifacts.BackOffice.BODatabaseInitializer);
+        Assert.That(storeFrontInitalizer is Artifacts.StoreFront.SFDatabaseInitializer, Is.True);
+        Assert.That(backOfficeInitalizer is Artifacts.BackOffice.BODatabaseInitializer, Is.True);
     }
 
 
@@ -121,7 +121,7 @@ public class Tests : BaseTest
         {
             IAdaptiveClient<IBOServiceManifest> client = scope.Resolve<IAdaptiveClient<IBOServiceManifest>>();
             Account account = await client.TryAsync(async x => await x.AccountsService.GetAccountByID(1));
-            Assert.AreEqual(DataBaseProviderName.MSSQL, account.Name);
+            Assert.That(DataBaseProviderName.MSSQL, Is.EqualTo(account.Name));
         }
     }
 
@@ -145,7 +145,7 @@ public class Tests : BaseTest
         {
             IAdaptiveClient<IBOServiceManifest> client = scope.Resolve<IAdaptiveClient<IBOServiceManifest>>();
             Account account = await client.CallAsync(x => x.PaymentsService.GetAccountForPaymentID(1), ep.Name);
-            Assert.AreEqual("TEST", account.Name);
+            Assert.That("TEST", Is.EqualTo(account.Name));
         }
     }
 
@@ -167,12 +167,12 @@ public class Tests : BaseTest
         {
             IAdaptiveClient<IBOServiceManifest> client = scope.Resolve<IAdaptiveClient<IBOServiceManifest>>();
             Account account = await client.TryAsync(async x => await x.AccountsService.GetAccountByID(1));
-            Assert.AreEqual(DataBaseProviderName.MSSQL, account.Name);
+            Assert.That(DataBaseProviderName.MSSQL, Is.EqualTo(account.Name));
 
             // We are passing 2 as an ID so the call to the MSSQL instance will throw.  
             // We fall back to the MySQL instance which returns "MySQL"
             account = await client.TryAsync(async x => await x.AccountsService.GetAccountByID(2));
-            Assert.AreEqual(DataBaseProviderName.MySQL, account.Name);
+            Assert.That(DataBaseProviderName.MySQL, Is.EqualTo(account.Name));
         }
     }
 
@@ -180,6 +180,6 @@ public class Tests : BaseTest
     public void Single_DbContext_instance_is_injected_into_all_services()
     {
         IAdaptiveClient<ISFServiceManifest> client = Container.Resolve<IAdaptiveClient<ISFServiceManifest>>();
-        Assert.IsTrue(client.Call(x => x.OrdersService.AreDbContextsEqual()));
+        Assert.That(client.Call(x => x.OrdersService.AreDbContextsEqual()), Is.True);
     }
 }

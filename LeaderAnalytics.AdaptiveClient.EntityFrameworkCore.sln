@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaderAnalytics.AdaptiveClient.EntityFrameworkCore", "LeaderAnalytics.AdaptiveClient.EntityFrameworkCore\LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.csproj", "{8AFE5964-BABC-41F3-9E36-6C2F0FCD3E99}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifacts", "Artifacts", "{7647F58A-9B55-4E24-8B23-15D56436B3CA}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A64D7A4-4C6A-4C88-9F71-BA884071A536}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		version.json = version.json
 	EndProjectSection
 EndProject
 Global

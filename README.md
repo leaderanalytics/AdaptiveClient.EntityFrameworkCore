@@ -10,6 +10,7 @@ Get the [Nuget package](https://www.nuget.org/packages/AdaptiveClient.EntityFram
 
 
 ### Change log
+2024-11-29 v5 - Migrate to .net 9 / EF 9.
 
 2022-12-27 v4 - Migrate to .net 7 / EF 7.
 
