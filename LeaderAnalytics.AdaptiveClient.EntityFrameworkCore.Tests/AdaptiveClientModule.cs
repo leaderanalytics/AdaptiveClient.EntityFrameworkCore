@@ -2,14 +2,17 @@
 
 public class AdaptiveClientModule : IAdaptiveClientModule
 {
+    private const string secretsFile = "c:\\users\\sam\\onedrive\\LeaderAnalytics\\secrets.json";
+
     public void Register(RegistrationHelper registrationHelper)
     {
         IEnumerable<IEndPointConfiguration> endPoints = EndPointUtilities.LoadEndPoints("appsettings.json");
+        SecretsManager secretsManager = new SecretsManager(secretsFile);
 
         if (endPoints.Any(x => x.ProviderName == DataBaseProviderName.MySQL))
         {
-            endPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(endPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
-            endPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(endPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            endPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = secretsManager.PopulateConnectionStrings(endPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            endPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = secretsManager.PopulateConnectionStrings(endPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
         }
 
 

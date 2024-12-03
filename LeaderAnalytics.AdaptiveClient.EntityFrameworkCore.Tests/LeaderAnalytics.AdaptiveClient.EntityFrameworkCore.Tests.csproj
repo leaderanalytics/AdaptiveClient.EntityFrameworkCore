@@ -10,6 +10,7 @@
     <PackageReference Include="LeaderAnalytics.AdaptiveClient" Version="5.0.1" />
     <PackageReference Include="LeaderAnalytics.AdaptiveClient.Utilities" Version="5.0.3" />
     <PackageReference Include="Autofac" Version="8.1.1" />
+    <PackageReference Include="LeaderAnalytics.Core" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>

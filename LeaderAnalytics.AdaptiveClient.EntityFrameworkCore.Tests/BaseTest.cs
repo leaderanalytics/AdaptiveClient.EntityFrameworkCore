@@ -6,8 +6,8 @@ public abstract class BaseTest
     protected IContainer Container { get; set; }
     protected IEnumerable<IEndPointConfiguration> EndPoints { get; set; }
     protected IAdaptiveClient<IBOServiceManifest> BOServiceClient;
-    
     protected readonly string CurrentDatabaseProviderName;
+    private const string secretsFile = "c:\\users\\sam\\onedrive\\LeaderAnalytics\\secrets.json";
 
     public BaseTest(string databaseProviderName)
     {
@@ -27,11 +27,12 @@ public abstract class BaseTest
     protected async Task CreateTestArtifacts()
     {
         EndPoints = EndPointUtilities.LoadEndPoints("appsettings.json");
+        SecretsManager secretsManager = new SecretsManager(secretsFile);
 
         if (EndPoints.Any(x => x.ProviderName == DataBaseProviderName.MySQL))
         {
-            EndPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(EndPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
-            EndPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = ConnectionstringUtility.BuildConnectionString(EndPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            EndPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = secretsManager.PopulateConnectionStrings(EndPoints.First(x => x.API_Name == API_Name.BackOffice && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
+            EndPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString = secretsManager.PopulateConnectionStrings(EndPoints.First(x => x.API_Name == API_Name.StoreFront && x.ProviderName == DataBaseProviderName.MySQL).ConnectionString);
         }
         Builder = new ContainerBuilder();
         Builder.RegisterModule(new AutofacModule());
