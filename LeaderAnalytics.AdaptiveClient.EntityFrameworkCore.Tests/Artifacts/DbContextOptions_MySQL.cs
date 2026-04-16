@@ -8,7 +8,7 @@ public class DbContextOptions_MySQL : IDbContextOptions
     {
         DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
         //https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/issues/1246
-        builder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); 
+        builder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), options => options.SchemaBehavior(Pomelo.EntityFrameworkCore.MySql.Infrastructure.MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}")); 
         Options = builder.Options;
     }
 }
