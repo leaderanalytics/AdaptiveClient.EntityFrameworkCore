@@ -4,26 +4,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="LeaderAnalytics.Core" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.6" />
-	<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
-  </ItemGroup>
-
+ 
   <ItemGroup>
     <ProjectReference Include="..\LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests\LeaderAnalytics.AdaptiveClient.EntityFrameworkCore.Tests.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Nerdbank.GitVersioning" Version="3.9.50" />
-  </ItemGroup>
-
-
 </Project>

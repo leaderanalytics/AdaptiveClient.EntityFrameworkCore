@@ -24,18 +24,7 @@
 	    <AssemblyName>LeaderAnalytics.AdaptiveClient.EntityFrameworkCore</AssemblyName>
     </PropertyGroup>	
   <ItemGroup>
-    <PackageReference Include="LeaderAnalytics.AdaptiveClient" Version="6.0.0" />
-    <PackageReference Include="Autofac" Version="9.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.6" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\icon.png" Pack="true" PackagePath="\" />
     <None Include="..\license" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Nerdbank.GitVersioning" Version="3.9.50" />
   </ItemGroup>
 </Project>
